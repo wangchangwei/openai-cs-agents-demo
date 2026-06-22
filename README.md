@@ -5,7 +5,7 @@
 ![NextJS](https://img.shields.io/badge/Built_with-NextJS-blue)
 ![OpenAI API](https://img.shields.io/badge/Powered_by-OpenAI_API-orange)
 
-This repository contains a demo of a Customer Service interface built on top of the [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/).
+This repository contains a state-of-the-art **Multi-Agent Team** demonstration for Customer Service, built on top of the [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/). It showcases a complete **AI Agent Swarm** architecture where multiple specialized **AI Agents** collaborate as a team to handle complex user intents.
 
 It is composed of two parts:
 

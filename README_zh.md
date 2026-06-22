@@ -6,7 +6,7 @@
 ![NextJS](https://img.shields.io/badge/Built_with-NextJS-blue)
 ![OpenAI API](https://img.shields.io/badge/Powered_by-OpenAI_API-orange)
 
-本仓库包含了一个基于 [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) 构建的智能客服界面演示项目。
+本仓库包含了一个基于 [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) 构建的先进的**多智能体团队 (Multi-Agent Team)** 客服演示项目。它展示了一个完整的 **AI 智能体集群 (Agent Swarm)** 架构，多个具备专属技能的专业 **AI 智能体 (AI Agents)** 作为一个协作团队，共同处理复杂的用户意图。
 
 该项目由两部分组成：
 
