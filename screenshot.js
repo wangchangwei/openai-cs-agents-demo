@@ -12,7 +12,7 @@ const path = require('path');
   const browser = await chromium.launch();
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1080 },
-    locale: 'zh-CN',
+    locale: 'en-US',
   });
   
   const page = await context.newPage();
