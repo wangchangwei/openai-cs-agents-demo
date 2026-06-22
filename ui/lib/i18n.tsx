@@ -158,13 +158,13 @@ const I18nContext = createContext<{
   setLocale: (l: Locale) => void;
   t: (key: keyof typeof translations.en) => string;
 }>({
-  locale: "zh",
+  locale: "en",
   setLocale: () => {},
   t: (key) => translations.en[key]
 });
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
-  const [locale, setLocale] = useState<Locale>("zh");
+  const [locale, setLocale] = useState<Locale>("en");
   const t = (key: keyof typeof translations.en) => translations[locale][key] || translations.en[key] || key as string;
 
   return (
