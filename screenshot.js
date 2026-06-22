@@ -19,13 +19,25 @@ const path = require('path');
   
   console.log("Navigating to demo page...");
   await page.goto('http://localhost:3000/', { waitUntil: 'load' });
-  await page.waitForTimeout(5000); // Wait 5s for chat components and chatkit to initialize
+  await page.waitForTimeout(5000); 
+  
+  // Switch to English
+  console.log("Switching to English locale...");
+  try { await page.click('text=EN', { timeout: 2000 }); } catch (e) {}
+  await page.waitForTimeout(1000);
+
   await page.screenshot({ path: 'assets/demo.png', fullPage: true });
   console.log("Saved assets/demo.png");
 
   console.log("Navigating to code page...");
   await page.goto('http://localhost:3000/code', { waitUntil: 'load' });
-  await page.waitForTimeout(5000); // Wait 5s for syntax highlighting and animations
+  await page.waitForTimeout(5000); 
+  
+  // Switch to English
+  console.log("Switching to English locale...");
+  try { await page.click('text=EN', { timeout: 2000 }); } catch (e) {}
+  await page.waitForTimeout(1000);
+
   await page.screenshot({ path: 'assets/code.png', fullPage: true });
   console.log("Saved assets/code.png");
 
