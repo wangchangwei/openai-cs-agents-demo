@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import { I18nProvider } from "@/lib/i18n";
+import { Navbar } from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +28,12 @@ export default function RootLayout({
           src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"
           strategy="beforeInteractive"
         />
-        {children}
+        <I18nProvider>
+          <div className="flex flex-col h-screen bg-gray-100 overflow-hidden">
+            <Navbar />
+            {children}
+          </div>
+        </I18nProvider>
       </body>
     </html>
   );

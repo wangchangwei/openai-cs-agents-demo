@@ -12,7 +12,18 @@ It is composed of two parts:
 
 2. A Next.js UI allowing the visualization of the agent orchestration process and providing a chat interface. It uses [ChatKit](https://openai.github.io/chatkit-js/) to provide a high-quality chat interface.
 
-![Demo Screenshot](screenshot.jpg)
+### Product Demo Interface
+![Demo Interface Screenshot](assets/demo.png)
+
+### Core Code Architecture View
+![Code Architecture Screenshot](assets/code.png)
+
+## ✨ New Features (Recent Updates)
+
+- **🌐 Complete Internationalization (i18n):** Global language toggle to switch the UI seamlessly between English and Chinese (`en`/`zh`).
+- **📚 Interactive Core Code Viewer:** A dedicated `/code` page containing syntax-highlighted, collapsible blocks of the backend python logic split into 4 clear modules (Agents, Tools, Routing, Guardrails).
+- **🏗️ Visual Swarm Architecture Diagram:** A beautiful, responsive native React component on the Code page that maps out the flow from User Input -> Guardrails -> Triage Agent -> Specialized Agents & Tools.
+- **🗣️ Dynamic Prompt Translation Engine:** The python backend agent instructions and tool descriptions embedded in the Core Code Viewer automatically translate to Chinese when you toggle the UI language, providing an unmatched educational experience without altering the underlying Python execution environment.
 
 ## How to use
 

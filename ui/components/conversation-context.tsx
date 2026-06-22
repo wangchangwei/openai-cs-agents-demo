@@ -3,6 +3,7 @@
 import { PanelSection } from "./panel-section";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookText } from "lucide-react";
+import { useTranslation } from "@/lib/i18n";
 
 interface ConversationContextProps {
   context: Record<string, any>;
@@ -32,9 +33,11 @@ export function ConversationContext({ context }: ConversationContextProps) {
     return String(value);
   };
 
+  const { t } = useTranslation();
+
   return (
     <PanelSection
-      title="Conversation Context"
+      title={t("conversationContext")}
       icon={<BookText className="h-4 w-4 text-blue-600" />}
     >
       <Card className="bg-gradient-to-r from-white to-gray-50 border-gray-200 shadow-sm">

@@ -1,0 +1,177 @@
+"use client";
+
+import React, { createContext, useContext, useState, ReactNode } from "react";
+
+type Locale = "en" | "zh";
+
+export const translations = {
+  en: {
+    agentView: "Agent View",
+    airlineCo: "Airline Co.",
+    availableAgents: "Available Agents",
+    active: "Active",
+    conversationContext: "Conversation Context",
+    guardrails: "Guardrails",
+    relevanceGuardrail: "Relevance Guardrail",
+    jailbreakGuardrail: "Jailbreak Guardrail",
+    ensureRelevant: "Ensure messages are relevant to airline support",
+    detectBypass: "Detect and block attempts to bypass or override system instructions",
+    passed: "Passed",
+    failed: "Failed",
+    runnerOutput: "Runner Output",
+    showPayload: "Show output payload",
+    toolCall: "Tool call",
+    customerView: "Customer View",
+    messagePlaceholder: "Message...",
+    greeting: "Hi! I'm your airline assistant. How can I help today?",
+    prompt1Label: "Change my seat",
+    prompt1Text: "Can you move me to seat 14C?",
+    prompt2Label: "Flight status",
+    prompt2Text: "What's the status of flight FLT-123?",
+    prompt3Label: "Missed connection",
+    prompt3Text: "My flight from Paris to New York was delayed and I missed my connection to Austin. Also, my checked bag is missing and I need to spend the night in New York. Can you help me?",
+    businessClass: "Business Class",
+    economyPlus: "Economy Plus",
+    economy: "Economy",
+    available: "Available",
+    occupied: "Occupied",
+    selected: "Selected",
+    exitRow: "Exit Row",
+    "Seat and Special Services Agent": "Seat and Special Services Agent",
+    "Updates seats and handles medical or special service seating.": "Updates seats and handles medical or special service seating.",
+    "Flight Information Agent": "Flight Information Agent",
+    "Provides flight status, connection impact, and alternate options.": "Provides flight status, connection impact, and alternate options.",
+    "Booking and Cancellation Agent": "Booking and Cancellation Agent",
+    "Handles new bookings, rebookings after delays, and cancellations.": "Handles new bookings, rebookings after delays, and cancellations.",
+    "Refunds and Compensation Agent": "Refunds and Compensation Agent",
+    "Opens compensation cases and issues hotel/meal support after delays.": "Opens compensation cases and issues hotel/meal support after delays.",
+    "FAQ Agent": "FAQ Agent",
+    "Answers common questions about policies, baggage, seats, and compensation.": "Answers common questions about policies, baggage, seats, and compensation.",
+    "Triage Agent": "Triage Agent",
+    "Delegates requests to the right specialist agent (flight info, booking, seats, FAQ, baggage, compensation).": "Delegates requests to the right specialist agent (flight info, booking, seats, FAQ, baggage, compensation).",
+    tool_call: "Tool call",
+    tool_output: "Tool output",
+    context_update: "Context update",
+    handoff: "Handoff",
+    noRunnerEvents: "No runner events yet",
+    agent: "Agent",
+    triage_agent: "Triage Agent",
+    faq_agent: "FAQ Agent",
+    refunds_compensation_agent: "Refunds and Compensation Agent",
+    booking_cancellation_agent: "Booking and Cancellation Agent",
+    flight_information_agent: "Flight Information Agent",
+    seat_special_services_agent: "Seat and Special Services Agent",
+    demo: "Demo",
+    coreCode: "Core Code",
+    "Airline Co. Customer Service Simulator": "Airline Co. Customer Service Simulator",
+    collapseBtn: "Collapse",
+    expandBtn: "Expand",
+    coreImplementationCode: "Core Implementation Code",
+    coreCodeDesc: "This page guides new developers on how to architect a multi-agent swarm using the OpenAI Agents SDK. We break down the core implementation into three key modules: Agent Definitions, Handoff Routing, and Guardrails.",
+    agentConfigurations: "Module 1: Agent & Tool Definitions",
+    safetyGuardrails: "Module 4: Safety & Relevance Guardrails",
+    moduleAgentDefsDesc: "This section demonstrates how to create distinct, specialized agents. Each agent is configured with a specific system prompt (instructions), a set of allowed tools (functions it can call), and input guardrails.",
+    moduleRouting: "Module 3: Handoff Routing & State Management",
+    moduleRoutingDesc: "This section shows how to wire the agents together into a unified swarm. By defining 'handoffs', agents can dynamically transfer the conversation to a more suitable peer when the user changes topics. We also use lifecycle callbacks (on_handoff) to ensure required context is populated before an agent starts working.",
+    moduleGuardrailsDesc: "Guardrails intercept messages before they reach the agent. Here we configure a Relevance Guardrail and a Jailbreak Guardrail using lightweight evaluator agents to ensure the conversation stays on topic and safe.",
+    toolImplementations: "Module 2: Tool Implementations (tools.py)",
+    moduleToolsDesc: "Tools define what an agent can actually DO. Here, functions like book_new_flight or assign_special_service_seat are decorated with @function_tool to allow the Agents SDK to dynamically expose them to the AI."
+  },
+  zh: {
+    agentView: "代理监控视图",
+    airlineCo: "航空客服演示",
+    availableAgents: "可用代理 (Agents)",
+    active: "当前活跃",
+    conversationContext: "对话上下文 (Context)",
+    guardrails: "安全护栏 (Guardrails)",
+    relevanceGuardrail: "相关性护栏",
+    jailbreakGuardrail: "越狱防护栏",
+    ensureRelevant: "确保对话内容与航空支持业务相关",
+    detectBypass: "检测并拦截绕过系统指令或策略的恶意尝试",
+    passed: "验证通过",
+    failed: "已拦截",
+    runnerOutput: "执行输出 (Runner Output)",
+    showPayload: "显示完整输出参数",
+    toolCall: "工具调用",
+    customerView: "客户对话视图",
+    messagePlaceholder: "请输入消息...",
+    greeting: "您好！我是您的航空助手，有什么我可以帮您的吗？",
+    prompt1Label: "更换座位",
+    prompt1Text: "你能帮我换到 14C 座位吗？",
+    prompt2Label: "航班状态",
+    prompt2Text: "航班 FLT-123 的状态是什么？",
+    prompt3Label: "错失转机",
+    prompt3Text: "我从巴黎飞往纽约的航班延误了，导致我错过了去奥斯汀的转机。同时，我的托运行李也丢失了，需要在纽约住一晚。你能帮我吗？",
+    businessClass: "商务舱",
+    economyPlus: "高端经济舱",
+    economy: "经济舱",
+    available: "可选",
+    occupied: "已占",
+    selected: "已选",
+    exitRow: "紧急出口行",
+    "Seat and Special Services Agent": "座位与特殊服务代理",
+    "Updates seats and handles medical or special service seating.": "更新座位安排并处理医疗或特殊服务需求。",
+    "Flight Information Agent": "航班信息代理",
+    "Provides flight status, connection impact, and alternate options.": "提供航班状态、转机影响评估以及备选方案。",
+    "Booking and Cancellation Agent": "预订与取消代理",
+    "Handles new bookings, rebookings after delays, and cancellations.": "处理新预订、延误后的改签以及航班取消。",
+    "Refunds and Compensation Agent": "退款与补偿代理",
+    "Opens compensation cases and issues hotel/meal support after delays.": "开启补偿案件，并在延误后发放酒店/餐饮支持。",
+    "Refunds and Compensation Agent": "退款与补偿代理",
+    "Opens compensation cases and issues hotel/meal support after delays.": "开启补偿案件，并在延误后发放酒店/餐饮支持。",
+    "FAQ Agent": "常见问题 (FAQ) 代理",
+    "Answers common questions about policies, baggage, seats, and compensation.": "解答有关政策、行李、座位和补偿的常见问题。",
+    "Triage Agent": "分诊分发代理 (Triage)",
+    "Delegates requests to the right specialist agent (flight info, booking, seats, FAQ, baggage, compensation).": "将请求分配给正确的专家代理（航班信息、预订、座位、FAQ、行李、补偿）。",
+    tool_call: "工具调用",
+    tool_output: "工具输出",
+    context_update: "更新上下文",
+    handoff: "代理交接",
+    noRunnerEvents: "暂无执行事件",
+    agent: "代理",
+    triage_agent: "分诊分发代理 (Triage)",
+    faq_agent: "常见问题 (FAQ) 代理",
+    refunds_compensation_agent: "退款与补偿代理",
+    booking_cancellation_agent: "预订与取消代理",
+    flight_information_agent: "航班信息代理",
+    seat_special_services_agent: "座位与特殊服务代理",
+    collapseBtn: "折叠",
+    expandBtn: "展开",
+    coreImplementationCode: "核心实现代码",
+    coreCodeDesc: "本页面旨在指导开发者如何使用 OpenAI Agents SDK 搭建一个多智能体协作架构。我们将核心代码拆解为了三个关键模块：智能体定义、路由交接、以及安全护栏。",
+    agentConfigurations: "模块一：智能体与工具定义",
+    safetyGuardrails: "模块四：安全与相关性护栏",
+    moduleAgentDefsDesc: "这部分展示了如何创建专注于特定任务的独立智能体。每个智能体都被配置了明确的系统提示词（指令）、专属可调用的工具集合（函数）以及前置的安全护栏。",
+    moduleRouting: "模块三：智能体路由与状态管理",
+    moduleRoutingDesc: "这部分展示了如何将多个独立的智能体串联成一个统一的协作网络。通过定义 'handoffs' (交接路由)，智能体可以在用户转移话题时动态地将会话移交给更适合的同行。同时，演示了如何利用生命周期回调函数 (on_handoff) 在交接发生前准备必需的上下文数据。",
+    moduleGuardrailsDesc: "安全护栏会在消息到达智能体之前进行拦截与校验。这里我们使用轻量级的评估智能体配置了“相关性护栏”和“防越狱护栏”，以确保对话内容始终围绕航空主题且防范恶意攻击。",
+    demo: "产品演示",
+    coreCode: "核心代码",
+    "Airline Co. Customer Service Simulator": "航空客服智能体演练台",
+    toolImplementations: "模块二：工具实现 (tools.py)",
+    moduleToolsDesc: "工具（Tools）决定了智能体在物理世界上实际能「做」什么。在这里，我们通过 @function_tool 装饰器，将取消航班、查询状态等普通 Python 函数暴露给大模型，使其能够动态调用。"
+  }
+};
+
+const I18nContext = createContext<{
+  locale: Locale;
+  setLocale: (l: Locale) => void;
+  t: (key: keyof typeof translations.en) => string;
+}>({
+  locale: "zh",
+  setLocale: () => {},
+  t: (key) => translations.en[key]
+});
+
+export const I18nProvider = ({ children }: { children: ReactNode }) => {
+  const [locale, setLocale] = useState<Locale>("zh");
+  const t = (key: keyof typeof translations.en) => translations[locale][key] || translations.en[key] || key as string;
+
+  return (
+    <I18nContext.Provider value={{ locale, setLocale, t }}>
+      {children}
+    </I18nContext.Provider>
+  );
+};
+
+export const useTranslation = () => useContext(I18nContext);

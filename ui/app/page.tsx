@@ -5,6 +5,7 @@ import { AgentPanel } from "@/components/agent-panel";
 import { ChatKitPanel } from "@/components/chatkit-panel";
 import type { Agent, AgentEvent, GuardrailCheck } from "@/lib/types";
 import { fetchBootstrapState, fetchThreadState } from "@/lib/api";
+import { useTranslation } from "@/lib/i18n";
 
 export default function Home() {
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -14,6 +15,8 @@ export default function Home() {
   const [context, setContext] = useState<Record<string, any>>({});
   const [threadId, setThreadId] = useState<string | null>(null);
   const [initialThreadId, setInitialThreadId] = useState<string | null>(null);
+
+  const { t } = useTranslation();
 
   const normalizeEvents = useCallback((items: AgentEvent[]) => {
     if (!items.length) return items;
@@ -107,7 +110,7 @@ export default function Home() {
   }, [hydrateState, threadId]);
 
   return (
-    <main className="flex h-screen gap-2 bg-gray-100 p-2">
+    <main className="flex h-full gap-2 p-2">
       <AgentPanel
         agents={agents}
         currentAgent={currentAgent}

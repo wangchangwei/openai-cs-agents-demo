@@ -423,6 +423,12 @@ class AirlineServer(ChatKitServer[dict[str, Any]]):
                 )
             )
             return
+        except Exception as e:
+            import traceback
+            print("================ UNEXPECTED ERROR IN STREAM ================")
+            traceback.print_exc()
+            print("==========================================================")
+            raise e
         state.input_items = result.to_input_list()
         remaining_items = result.new_items[streamed_items_seen:]
         new_events, active_agent = self._record_events(remaining_items, state.current_agent_name, thread.id)

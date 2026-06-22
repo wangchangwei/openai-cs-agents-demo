@@ -4,6 +4,11 @@ import json
 import os
 from typing import Any, Dict
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
 from chatkit.server import StreamingResult
 from fastapi import Depends, FastAPI, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
